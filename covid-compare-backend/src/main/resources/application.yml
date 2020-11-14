@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://database-1.cqqbcybjiry9.eu-west-1.rds.amazonaws.com/covid_compare
-    username: postgres
-    password: postgres
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
   jpa:
     show-sql: false
     hibernate:
