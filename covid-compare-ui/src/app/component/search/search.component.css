@@ -1,0 +1,19 @@
+.ng-select {
+  margin-top: 0.4em;
+}
+
+.clr-form-control {
+  margin-top: 0.2rem;
+}
+
+.feedback {
+  font-size: 0.5rem;
+  color: red;
+}
+
+@media (min-width: 768px) {
+  .align-end {
+    text-align: end;
+    justify-items: end;
+  }
+}

@@ -1,0 +1,65 @@
+<form [formGroup]="chartForm" (ngSubmit)="doSubmit()">
+  <div class="clr-row">
+    <div class="clr-col-sm-12 clr-col-md-3">
+      <ng-select [items]="countries" bindLabel="name" bindValue="iso" placeholder="Select Countries"
+        appendTo="body" [multiple]="true" formControlName="countriesSelect" name="countriesSelect"
+        id="countriesSelect" [(ngModel)]="selectedCountries">
+      </ng-select>
+      <div *ngIf="submitted && f.countriesSelect.errors" class="feedback">
+        <div *ngIf="f.countriesSelect.errors.required">
+          Please select at least one country
+        </div>
+      </div>
+    </div>
+    <div class="clr-col-sm-12 clr-col-md-3">
+      <clr-date-container>
+        <label for="startDate">Start Date (mm/dd/yyyy)</label>
+        <input type="date" clrDate name="startDate" [(ngModel)]="startDate" formControlName="startDate"
+          required />
+      </clr-date-container>
+      <div *ngIf="submitted && f.startDate.errors" class="feedback">
+        <div *ngIf="f.startDate.errors.required">
+          Please select a start date
+        </div>
+        <div *ngIf="f.startDate.errors.StartDateBeforeEndDate">
+          Start Date must be before end date
+        </div>
+      </div>
+    </div>
+    <div class="clr-col-sm-12 clr-col-md-3">
+      <clr-date-container>
+        <label for="endDate">End Date (mm/dd/yyyy)</label>
+        <input type="date" clrDate name="endDate" [(ngModel)]="endDate" formControlName="endDate" required />
+      </clr-date-container>
+      <div *ngIf="submitted && f.endDate.errors" class="feedback">
+        <div *ngIf="f.endDate.errors.required">
+          Please select an end date
+        </div>
+      </div>
+      <div *ngIf="submitted && f.startDate.errors" class="feedback">
+        <div *ngIf="f.startDate.errors.EndDateInFuture">
+          End Date must not be in the future
+        </div>
+      </div>
+    </div>
+    <div class="clr-col-sm-12 clr-col-md-3 align-end">
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+  </div>
+</form>
+<clr-tabs>
+  <clr-tab>
+    <clr-tab-content>
+      <button clrTabLink>Cases</button>
+      <cases-chart [selectedCountries]="selectedCountries" [startDate]="startDate" [endDate]="endDate">
+      </cases-chart>
+    </clr-tab-content>
+  </clr-tab>
+  <clr-tab>
+    <clr-tab-content>
+      <button clrTabLink>Deaths</button>
+      <deaths-chart [selectedCountries]="selectedCountries" [startDate]="startDate" [endDate]="endDate">
+      </deaths-chart>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>

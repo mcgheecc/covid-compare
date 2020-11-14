@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cmg.covidcompare</groupId>
+  <artifactId>covidcompare</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>CovidCompare</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <modules>
+    <module>covid-compare-core</module>
+    <module>covid-compare-backend</module>
+    <module>covid-compare-web-scraper</module>
+    <module>covid-compare-init-countries-job</module>
+    <module>covid-compare-init-country-data-job</module>
+    <module>covid-compare-update-daily-stats-job</module>
+  </modules>
+
+</project>

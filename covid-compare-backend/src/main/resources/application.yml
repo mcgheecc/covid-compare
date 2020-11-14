@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://database-1.cqqbcybjiry9.eu-west-1.rds.amazonaws.com/covid_compare
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+feign:
+  url: http://covid-compare-web-scraper-api.eu-west-1.elasticbeanstalk.com:8080
+covid-api-base-url: https://covid-api.com/api/
+covid-api-country-report-uri: reports?date=%s&iso=%s

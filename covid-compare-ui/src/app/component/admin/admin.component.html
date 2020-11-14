@@ -1,0 +1,116 @@
+<clr-modal [clrModalSize]="clrModalSize" [(clrModalOpen)]="showAdmin">
+  <h3 class="modal-title">Administration</h3>
+  <div class="modal-body">
+    <clr-alert *ngIf="isDisabled" [clrAlertType]="'info'">
+      <clr-alert-item>
+        <span class="alert-text">Administration is disabled in this Demo.</span>
+      </clr-alert-item>
+    </clr-alert>
+    <clr-alert *ngIf="updateCountryJobStatus === 'STARTED'" [clrAlertType]="'info'">
+      <clr-alert-item>
+        <clr-spinner></clr-spinner>
+        <span class="alert-text">UpdateCountryJob running...</span>
+      </clr-alert-item>
+    </clr-alert>
+    <clr-alert *ngIf="errorMessage" [clrAlertType]="'danger'">
+      <clr-alert-item>
+        <span class="alert-text" [innerText]="errorMessage"></span>
+      </clr-alert-item>
+    </clr-alert>
+    <clr-alert *ngIf="updateCountryJobStatus === 'COMPLETED'" [clrAlertType]="'success'">
+      <clr-alert-item>
+          <span class="alert-text" [innerText]="updateCountryJobStatus"></span>
+      </clr-alert-item>
+    </clr-alert>
+    <clr-tabs>
+      <clr-tab>
+        <clr-tab-content>
+          <button clrTabLink>Batch Jobs</button>
+          <div class="job-form">
+            <div class="clr-row">
+              <div class="clr-col-sm-12 clr-col-md-5">
+                <clr-signpost>
+                <div class="title" clrSignpostTrigger>Update Countries Job <clr-icon shape="info-circle"></clr-icon></div>
+                <clr-signpost-content *clrIfOpen>Initalizes the country table.</clr-signpost-content>
+                </clr-signpost>
+              </div>
+              <div class="clr-col-sm-12 clr-col-md-7 align-end">
+                <button class="btn btn-primary" aria-label="start" [disabled]="disableButtons"
+                  (click)="startUpdateCountriesJob()">
+                  Start
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="job-form">
+            <clr-signpost>
+              <div class="title" clrSignpostTrigger>Update Country Data Job <clr-icon shape="info-circle"></clr-icon></div>
+              <clr-signpost-content *clrIfOpen>Initalizes the country data table that contains the daily statistics.</clr-signpost-content>
+            </clr-signpost>
+            <form [formGroup]="updateCountryDataJobForm">
+              <div class="clr-row">
+                <div class="clr-col-md-5">
+                  <clr-date-container>
+                    <label for="startDate">Start Date (mm/dd/yyyy)</label>
+                    <input type="string" clrDate name="startDate" formControlName="startDate" required />
+                  </clr-date-container>
+                  <div *ngIf="updateCountryDataJobForm.controls.startDate.errors" class="feedback">
+                    <div *ngIf="updateCountryDataJobForm.controls.startDate.errors.required">
+                      Please select a start date
+                    </div>
+                    <div *ngIf="updateCountryDataJobForm.controls.startDate.errors.StartDateBeforeEndDate">
+                      Start Date must be before end date
+                    </div>
+                  </div>
+                </div>
+                <div class="clr-col-md-5">
+                  <clr-date-container>
+                    <label for="endDate">End Date (mm/dd/yyyy)</label>
+                    <input type="string" clrDate name="endDate" formControlName="endDate" required />
+                  </clr-date-container>
+                  <div *ngIf="updateCountryDataJobForm.controls.endDate.errors" class="feedback">
+                    <div *ngIf="updateCountryDataJobForm.controls.endDate.errors.required">
+                      Please select an end date
+                    </div>
+                  </div>
+                  <div *ngIf="updateCountryDataJobForm.controls.startDate.errors" class="feedback">
+                    <div *ngIf="updateCountryDataJobForm.controls.startDate.errors.EndDateInFuture">
+                      End Date must not be in the future
+                    </div>
+                  </div>
+                </div>
+                <div class="clr-col-md-2  align-end">
+                  <button class="btn btn-primary"  aria-label="start" [disabled]="disableButtons"
+                    (click)="startUpdateCountryDataJob()">
+                    Start
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="job-form">
+            <div class="clr-row">
+              <div class="clr-col-sm-12 clr-col-md-5">
+                <clr-signpost>
+                <div class="title" clrSignpostTrigger>Update Country Daily Data Job<clr-icon shape="info-circle"></clr-icon></div>
+                 <clr-signpost-content *clrIfOpen>
+                  Retrieves the latest data from worldometer and updates the database
+                  </clr-signpost-content>
+              </clr-signpost>
+              </div>
+              <div class="clr-col-sm-12 clr-col-md-7 align-end">
+                <button class="btn btn-primary" aria-label="start" [disabled]="disableButtons"
+                  (click)="startUpdateCountryDailyDataJob()">
+                  Start
+                </button>
+              </div>
+            </div>
+          </div>
+        </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="hide()">Close</button>
+  </div>
+</clr-modal>

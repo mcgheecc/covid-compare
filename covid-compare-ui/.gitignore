@@ -1,0 +1,11 @@
+.idea/
+**/.setttings/
+.project
+.vscode/
+.DS_Store
+*.iml
+.classpath
+.factorypath
+**/node_modules/**
+**/dist/**
+**/target/**
