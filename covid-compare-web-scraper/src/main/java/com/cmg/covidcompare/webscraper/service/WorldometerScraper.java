@@ -75,6 +75,7 @@ public class WorldometerScraper {
 
     private Optional<DomElement> getNewsDateElement(String countryName, LocalDate date) throws IOException {
         String url = worldometersCoronavirusUrl + parseCountryName(countryName);
+        log.info("Attempting to get daily stats from {}", url);
         HtmlPage page = getPage(url);
         return getNewsDateElement(page, date);
     }
@@ -146,5 +147,6 @@ public class WorldometerScraper {
         countryNameMap.put("Eswatini", "swaziland");
         countryNameMap.put("Guernsey", "channel-islands");
         countryNameMap.put("Congo (Brazzaville)", "congo");
+        countryNameMap.put("Czechia", "czech-republic");
     }
 }
