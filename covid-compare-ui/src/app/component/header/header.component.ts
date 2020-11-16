@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService} from '../../service/admin.service';
 
 @Component({
   selector: 'app-header',
@@ -8,18 +7,11 @@ import { AdminService} from '../../service/admin.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(protected adminService: AdminService) {
+  constructor() {
 
   }
 
   ngOnInit(): void {
   }
 
-  showAdmin() {
-    this.adminService.showAdmin();
-  }
-
-  showAbout() {
-
-  }
 }

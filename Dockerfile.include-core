@@ -1,0 +1,18 @@
+FROM maven:3-jdk-14 as build
+USER root
+WORKDIR /app
+COPY ./covid-compare-core/ /app
+RUN mvn clean install -B
+RUN mvn install:install-file -Dfile=target/core-0.0.1-SNAPSHOT.jar  -DgroupId=com.cmg.covidcompare  -DartifactId=core \
+   -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+
+ARG PROJECT_DIRECTORY
+WORKDIR /app2
+COPY $PROJECT_DIRECTORY /app2
+RUN mvn clean install -B
+
+FROM openjdk:14-jdk-alpine
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+COPY --from=build /app2/target/*.jar app.jar
+ENTRYPOINT exec java $JAVA_OPTS -jar /app.jar

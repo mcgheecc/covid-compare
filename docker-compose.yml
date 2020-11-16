@@ -1,0 +1,180 @@
+version: '3.1'
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  covid-compare-postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - covid-compare-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=covid-compare
+
+  covid-compare-backend:
+    container_name: covid-compare-backend
+    image: covid-compare-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-backend
+    ports:
+      - "8080:8080"
+    env_file: environment.env
+    volumes:
+      - ./covid-compare-backend:/opt/covid-compare-backend
+
+  covid-compare-ui:
+    build: ./covid-compare-ui
+    container_name: covid-compare-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - covid-compare-backend
+    volumes:
+      - ./covid-compare-ui:/opt/covid-compare-ui
+
+  covid-compare-init-countries-job:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-countries-job
+    container_name: covid-compare-init-countries-job
+    ports:
+      - "8081:8080"
+    env_file: environment.env
+    volumes:
+      - ./covid-compare-init-countries-job:/opt/covid-compare-init-countries-job
+
+  covid-compare-update-daily-stats-job:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-update-daily-stats-job
+    container_name: covid-compare-update-daily-stats-job
+    ports:
+      - "8088:8080"
+    env_file: environment.env
+    volumes:
+      - ./covid-compare-update-daily-stats-job:/opt/covid-compare-update-daily-stats-job
+
+  covid-compare-web-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-web-scraper
+    container_name: covid-compare-web-scraper
+    ports:
+      - "8082:8080"
+    env_file: environment.env
+    volumes:
+      - ./covid-compare-web-scraper:/opt/covid-compare-web-scraper
+
+  covid-compare-init-country-data-job-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-master
+    ports:
+      - "8083:8080"
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=master -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    volumes:
+      - ./covid-compare-init-country-data-job:/opt/covid-compare-init-country-data-job
+
+  covid-compare-init-country-data-job-slave-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-slave-1
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=slave  -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./batch-jobs/update-country-data-job:/opt/batch-jobs/update-country-data-job
+
+  covid-compare-init-country-data-job-slave-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-slave-2
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=slave  -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./batch-jobs/update-country-data-job:/opt/batch-jobs/update-country-data-job
+
+  covid-compare-init-country-data-job-slave-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-slave-3
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=slave  -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./batch-jobs/update-country-data-job:/opt/batch-jobs/update-country-data-job
+
+  covid-compare-init-country-data-job-slave-4:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-slave-4
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=slave  -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./batch-jobs/update-country-data-job:/opt/batch-jobs/update-country-data-job
+
+  covid-compare-init-country-data-job-slave-5:
+    build:
+      context: .
+      dockerfile: Dockerfile.include-core
+      args:
+        - PROJECT_DIRECTORY=./covid-compare-init-country-data-job
+    container_name: covid-compare-init-country-data-job-slave-5
+    env_file: environment.env
+    environment:
+      JAVA_OPTS: "-Dspring.profiles.active=slave  -Dspring.rabbitmq.host=rabbitmq"
+      RABBIT_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./batch-jobs/update-country-data-job:/opt/batch-jobs/update-country-data-job
+
+volumes:
+  covid-compare-postgres:

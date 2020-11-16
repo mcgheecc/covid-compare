@@ -36,7 +36,7 @@ import { AdminComponent } from './component/admin/admin.component';
       echarts
     }),
     HttpClientModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     ClarityModule,
     BrowserAnimationsModule,
     NgSelectModule

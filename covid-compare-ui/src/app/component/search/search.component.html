@@ -1,3 +1,14 @@
+<clr-alert *ngIf="submitted === false">
+  <clr-alert-item>
+      <span class="alert-text">
+        Select countries, start and end dates to compare their daily covid-19 statistics.
+      </span>
+  </clr-alert-item>
+</clr-alert>
+<clr-accordion>
+  <clr-accordion-panel [(clrAccordionPanelOpen)]="openAccordion">
+    <clr-accordion-title>Search</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>
 <form [formGroup]="chartForm" (ngSubmit)="doSubmit()">
   <div class="clr-row">
     <div class="clr-col-sm-12 clr-col-md-3">
@@ -47,6 +58,9 @@
     </div>
   </div>
 </form>
+</clr-accordion-content>
+</clr-accordion-panel>
+<clr-accordion>
 <clr-tabs>
   <clr-tab>
     <clr-tab-content>

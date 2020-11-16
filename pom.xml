@@ -25,4 +25,34 @@
     <module>covid-compare-update-daily-stats-job</module>
   </modules>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/covid-compare-backend/src/main/resources</outputDirectory>
+              <outputDirectory>${basedir}/covid-compare-init-countries-job/src/main/resources</outputDirectory>
+              <outputDirectory>${basedir}/covid-compare-init-country-data-job/src/main/resources</outputDirectory>
+              <outputDirectory>${basedir}/covid-compare-update-daily-stats-job/src/main/resources</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/resources</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

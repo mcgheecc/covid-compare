@@ -1,3 +1,19 @@
 .bg-primary {
     background-color: #0072a3 !important;
 }
+
+.subnav {
+  padding-left: 1.2rem;
+}
+
+@media screen and (max-width: 576px) {
+  .subnav {
+    font-size: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    line-height: 0.5rem;
+  }
+  .branding {
+    max-width: 15rem !important;
+  }
+}

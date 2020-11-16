@@ -17,6 +17,7 @@ public class CountryCaseDataMapper {
     CountryCovidData mapToCountryCaseData(String countryCode, Set<CountryData> countryStatusList) {
         CountryCovidData countryCovidData = new CountryCovidData();
         countryCovidData.setName(countryCode);
+        countryStatusList.stream().findFirst().ifPresent(c -> countryCovidData.setName(c.getCountry().getName()));
         NameValue[] nameValues = mapCasesToNameValues(countryStatusList);
         countryCovidData.setCases(nameValues);
         nameValues = mapCasesPerHundredThousandToNameValues(countryStatusList);

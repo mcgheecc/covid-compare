@@ -19,14 +19,15 @@ export class SearchComponent implements OnInit {
   countries: Country[];
   chartForm: FormGroup;
   submitted = false;
+  openAccordion = true;
 
   constructor(private countryService: CountryService, private countryChartDataService: CountryChartDataService,
     private formBuilder: FormBuilder) {
+    this.startDate = moment().subtract(7, 'days').toDate();//.format('MM/DD/YYYY');
+    this.endDate = moment().toDate();//.format('MM/DD/YYYY');
   }
 
   ngOnInit(): void {
-    this.startDate = moment().subtract(7, 'days').toDate();//.format('MM/DD/YYYY');
-    this.endDate = moment().toDate();//.format('MM/DD/YYYY');
 
     this.chartForm = this.formBuilder.group({
       countriesSelect: [this.selectedCountries, Validators.required],
@@ -50,6 +51,7 @@ export class SearchComponent implements OnInit {
     if (this.chartForm.invalid) {
       return;
     }
+    this.openAccordion = false;
 
     this.selectedCountries = this.f.countriesSelect.value;
     this.startDate = this.f.startDate.value;

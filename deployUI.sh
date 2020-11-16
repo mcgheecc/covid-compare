@@ -1,0 +1,1 @@
+scp -i my-aws-key.pem -r /Users/chris/Development/covid-compare/covid-compare-ui/dist/* ubuntu@52.211.90.123:/opt/front-end

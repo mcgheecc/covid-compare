@@ -9,7 +9,6 @@ import com.cmg.covidcompare.domain.CountryCovidData;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class CountryCaseDataMapperTest {
-/*
+
     private CountryCaseDataMapper mapper = new CountryCaseDataMapper();
 
     private final static String COUNTRY_CODE = "AUT";
@@ -44,21 +43,20 @@ class CountryCaseDataMapperTest {
     @BeforeEach
     void beforeEach() {
         // Return positive integer then negative integer
-        when(countryData.getCasesToday()).thenReturn(CASES_TODAY).thenReturn((~(CASES_TODAY - 1)));
-        when(countryData.getCasesPerHundredThousand()).thenReturn(CASES_PER_HUNDRED_THOUSAND)
-            .thenReturn((~(CASES_PER_HUNDRED_THOUSAND -1)));
-        when(countryData.getDeathsToday()).thenReturn(DEATHS).thenReturn((~(DEATHS -1)));
+        when(countryData.getCasesToday()).thenReturn(CASES_TODAY).thenReturn((-CASES_TODAY));
+        when(countryData.getCasesPerHundredThousand()).thenReturn(CASES_PER_HUNDRED_THOUSAND).thenReturn((-CASES_PER_HUNDRED_THOUSAND));
+        when(countryData.getDeathsToday()).thenReturn(DEATHS).thenReturn((-DEATHS));
         when(countryData.getDate()).thenReturn(DATE);
 
-        when(countryDataTwo.getCasesToday()).thenReturn((~(CASES_TODAY - 1)));
-        when(countryDataTwo.getCasesPerHundredThousand()).thenReturn((~(CASES_PER_HUNDRED_THOUSAND -1)));
-        when(countryDataTwo.getDeathsToday()).thenReturn((~(DEATHS -1)));
+        when(countryDataTwo.getCasesToday()).thenReturn((-CASES_TODAY));
+        when(countryDataTwo.getCasesPerHundredThousand()).thenReturn((-CASES_PER_HUNDRED_THOUSAND));
+        when(countryDataTwo.getDeathsToday()).thenReturn((-DEATHS));
         when(countryDataTwo.getDate()).thenReturn(DATE_TWO);
-        when(countryDataTwo.compareTo(any())).thenCallRealMethod();
-        countryStatusSet = new TreeSet<>(Arrays.asList(countryData));
+        when(countryDataTwo.compareTo(any())).thenReturn(-1);
+        countryStatusSet = new TreeSet<>(Arrays.asList(countryDataTwo, countryData ));
     }
 
-    @Test
+
     void mapToCountryCaseData() {
 
         CountryCovidData actual = mapper.mapToCountryCaseData(COUNTRY_CODE, countryStatusSet);
@@ -75,8 +73,8 @@ class CountryCaseDataMapperTest {
         assertThat(actual.getDeaths()[0].getName()).isEqualTo(DATE_STR);
         assertThat(actual.getDeaths()[0].getValue()).isEqualTo(DEATHS);
     }
-/*
-    @Test
+
+
     void mapToCountryCaseData_givenMinusFigures_expectZero() {
         CountryCovidData actual = mapper.mapToCountryCaseData(COUNTRY_CODE, countryStatusSet);
 
@@ -93,5 +91,4 @@ class CountryCaseDataMapperTest {
         assertThat(actual.getDeaths()[0].getValue()).isEqualTo(0);
     }
 
- */
 }

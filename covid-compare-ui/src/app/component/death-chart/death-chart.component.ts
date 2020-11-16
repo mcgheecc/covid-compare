@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { CountryChartData } from 'src/app/model/country-chart-data';
-import { SeriesData } from 'src/app/model/series-data';
-import { CountryChartDataService } from 'src/app/service/country-chart-data.service';
+import { CountryChartData } from '../../model/country-chart-data';
+import { SeriesData } from '../../model/series-data';
+import { CountryChartDataService } from '../../service/country-chart-data.service';
 
 @Component({
   selector: 'deaths-chart',

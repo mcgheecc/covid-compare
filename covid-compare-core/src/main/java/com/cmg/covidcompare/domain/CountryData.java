@@ -25,8 +25,8 @@ public class CountryData implements Comparable<CountryData> {
 
     @Id
     @GeneratedValue(generator = "country_data_generator", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name="country_data_generator", sequenceName = "country_data_seq", allocationSize=50)
-    private BigInteger id;
+    @SequenceGenerator(name="country_data_generator", sequenceName = "country_data_seq", allocationSize=1)
+    private Long id;
     private LocalDate date;
     private int confirmed;
     private int deaths;

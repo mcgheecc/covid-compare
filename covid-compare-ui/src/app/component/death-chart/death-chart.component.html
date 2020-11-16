@@ -3,10 +3,10 @@
       <div class="card">
         <div class="card-header">
           <div class="clr-row">
-            <div class="clr-col-6">
-              Daily New Deaths
+            <div class="clr-col-8">
+            <strong>Daily New Deaths</strong>
             </div>
-            <div class="clr-col-6">
+            <div class="clr-col-4">
               <clr-select-container>
                 <label>Chart Type</label>
                 <select clrSelect name="chartTypes" (change)="toggleChartType()" >
@@ -15,7 +15,7 @@
                 </select>
               </clr-select-container>
             </div>
-           </div>
+          </div>
         </div>
         <div class="card-block">
           <div echarts [options]="countryDeathsChartOptions" class="demo-chart" style="min-height: 15rem;"
