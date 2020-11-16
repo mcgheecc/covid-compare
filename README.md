@@ -5,19 +5,19 @@ Covid-19 statistics side-by-side by country.
 Includes docker-compose.yml for easy local development.
 
 ##### **Frontend**
-######Angular 10 UI using [ngx-echarts](https://github.com/swimlane/ngx-charts).
+###### Angular 10 UI using [ngx-echarts](https://github.com/swimlane/ngx-charts).
 ##### Backend
-######Springboot REST Controllers, JPA and Postgres. 
+###### Springboot REST Controllers, JPA and Postgres. 
 ##### Batch Jobs
-######Springboot, Spring Batch (using remote-chunking), Spring Integration, Rabbit MQ
-- ######Init Countries Job
+###### Springboot, Spring Batch (using remote-chunking), Spring Integration, Rabbit MQ
+- ###### Init Countries Job
   - Retrieves list of countries from covid-api.com and stores them in
    Postgres Database.
-- ######Init Country Data Job
+- ###### Init Country Data Job
   - Retrieves covid19 daily statistics between given start and end dates 
   for all countries in the country table from covid-api.com and stores them in Postgres Database. Utilizes 
   spring batch remote-chunking to improve performance.
-- ######Update Daily Stats Job
+- ###### Update Daily Stats Job
   - Uses the web scraper to retrieve todays country stats from worldometer and stores 
   them in Postgres Database.
 
