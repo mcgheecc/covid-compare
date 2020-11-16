@@ -27,6 +27,8 @@
     <jackson-annotations.version>2.11.3</jackson-annotations.version>
     <postgres-driver.version>42.2.17</postgres-driver.version>
     <spring-cloud-starter-openfeign.version>2.2.5.RELEASE</spring-cloud-starter-openfeign.version>
+    <jacoco.version>0.8.6</jacoco.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -105,25 +107,41 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.5</version>
+        <version>${jacoco.version}</version>
         <executions>
           <execution>
-            <id>prepare-agent</id>
-            <phase>initialize</phase>
+            <id>jacoco-initialize</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
+            <configuration>
+              <destFile>${basedir}\target\jacoco.exec</destFile>
+              <propertyName>argLine</propertyName>
+            </configuration>
           </execution>
           <execution>
-            <id>report</id>
+            <id>jacoco-site</id>
+            <phase>package</phase>
             <goals>
-              <goal>report-aggregate</goal>
+              <goal>report</goal>
             </goals>
-            <phase>verify</phase>
+            <configuration>
+              <dataFile>${basedir}\target\jacoco.exec</dataFile>
+              <outputDirectory>${basedir}\target</outputDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
 </project>
