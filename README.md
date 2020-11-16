@@ -25,8 +25,9 @@ Includes docker-compose.yml for easy local development.
 - Uses [htmlunit](https://github.com/HtmlUnit/htmlunit) to extract data from [worldometer](https://www.worldometers.info/)
 ### Preview
 ![Bar Chart Image](docs/img/bar-chart.png "Screenshot Bar Chart")
-###### Screenshot of barchart comparison view
+###### Screenshot of bar chart comparison view
 ![Line Chart Image](docs/img/line-chart.png "Screenshot Line Chart")
+###### Screenshot of line chart comparison view
 
 ### Demo
 [http://www.covidcompare.info](http://www.covidcompare.info)
