@@ -9,9 +9,9 @@
     <version>2.3.4.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-    <groupId>com.cmg.covidcompare</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-    <artifactId>backend</artifactId>
+  <groupId>com.cmg.covidcompare</groupId>
+  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>backend</artifactId>
   <name>CovidCompare Backend</name>
   <description>Spring Boot backend for Covid Compare App</description>
   <packaging>jar</packaging>
@@ -23,6 +23,7 @@
     <postgres-driver.version>42.2.17</postgres-driver.version>
     <spring-cloud-starter-openfeign.version>2.2.5.RELEASE</spring-cloud-starter-openfeign.version>
     <jacoco.version>0.8.6</jacoco.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -119,6 +120,15 @@
         </executions>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
 </project>
