@@ -29,4 +29,5 @@ Includes docker-compose.yml for easy local development.
 ![Line Chart Image](docs/img/line-chart.png "Screenshot Line Chart")
 
 ### Demo
-http://www.covidcompare.info
+[http://www.covidcompare.info](http://www.covidcompare.info)
+
