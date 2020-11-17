@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Log4j2
 public class CovidApiClient {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Value("${covid-api-base-url}regions")
     private String countryUrl;
@@ -75,4 +75,15 @@ public class CovidApiClient {
         return UK_DATA_FORMAT_CHANGE.isBefore(date);
     }
 
+    void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    void setCountryUrl(String countryUrl) {
+        this.countryUrl = countryUrl;
+    }
+
+    void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
+    }
 }
