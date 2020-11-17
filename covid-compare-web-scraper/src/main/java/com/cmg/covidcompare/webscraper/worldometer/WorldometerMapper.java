@@ -12,8 +12,15 @@ public class WorldometerMapper {
 
     public CountryDayData mapCountryDayData(DomElement element, String countryName, LocalDate date) {
         List<String> list = extractStrings(element);
-        int casesToday = Integer.parseInt(list.get(0));
-        int deathsToday = list.size() > 1 ? Integer.parseInt(list.get(1)) : 0;
+        int casesToday = 0;
+        int deathsToday = 0;
+
+        if (containsCases(element)) {
+            casesToday = Integer.parseInt(list.get(0));
+            deathsToday = list.size() > 1 ? Integer.parseInt(list.get(1)) : 0;
+        } else if (containsDeaths(element)) {
+            deathsToday = Integer.parseInt(list.get(0));
+        }
         return new CountryDayData(countryName, casesToday, 0, deathsToday, date, LocalDateTime.now());
     }
 
@@ -22,5 +29,14 @@ public class WorldometerMapper {
             .split("\\D")).filter(s -> !s.isEmpty())
             .collect(Collectors.toList());
     }
+
+    private boolean containsCases(DomElement element) {
+        return element.asText().contains("new cases");
+    }
+
+    private boolean containsDeaths(DomElement element) {
+        return element.asText().contains("new deaths");
+    }
+
 
 }

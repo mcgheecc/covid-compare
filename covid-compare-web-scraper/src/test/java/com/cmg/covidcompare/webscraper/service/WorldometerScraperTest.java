@@ -55,7 +55,7 @@ class WorldometerScraperTest {
         when(mockClient.getPage(any(String.class))).thenReturn(htmlPage);
         when(mockClient.getOptions()).thenReturn(webClientOptions);
 
-        Optional<CountryDayData> optional = scraper.getStats("austria", LocalDate.now());
+        Optional<CountryDayData> optional = scraper.getStats(COUNTRY_NAME, TODAY);
 
         assertThat(optional.isPresent()).isTrue();
         CountryDayData data = optional.get();
@@ -70,15 +70,42 @@ class WorldometerScraperTest {
         when(mockClient.getOptions()).thenReturn(webClientOptions);
         when(mockClient.getPage(any(String.class))).thenReturn(htmlPage);
         when(htmlPage.getElementById(any(String.class))).thenReturn(null);
-        Optional<CountryDayData> optional = scraper.getStats("austria", LocalDate.now());
-        assertThat(optional.isEmpty()).isTrue();
+
+        Optional<CountryDayData> actual = scraper.getStats(COUNTRY_NAME, TODAY);
+
+        assertThat(actual).isEmpty();
     }
 
     @Test
     void getStats_givenIOException_expectOptionIsEmpty() throws Exception {
         when(mockClient.getOptions()).thenReturn(webClientOptions);
         when(mockClient.getPage(any(String.class))).thenThrow(new IOException());
-        Optional<CountryDayData> optional = scraper.getStats("austria", LocalDate.now());
-        assertThat(optional.isEmpty()).isTrue();
+
+        Optional<CountryDayData> actual = scraper.getStats(COUNTRY_NAME, TODAY);
+
+        assertThat(actual).isEmpty();
     }
+
+    @Test
+    void getPopulation__givenNullHtmlPage_expectOptionIsEmpty() throws Exception {
+        when(mockClient.getOptions()).thenReturn(webClientOptions);
+        when(mockClient.getPage(any(String.class))).thenReturn(null);
+
+        Optional<Integer> actual = scraper.getPopulation(COUNTRY_NAME);
+
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    void getPopulation__givenXPathError_expectOptionIsEmpty() throws Exception {
+        when(mockClient.getOptions()).thenReturn(webClientOptions);
+        when(mockClient.getPage(any(String.class))).thenReturn(htmlPage);
+        when(htmlPage.getByXPath(any(String.class))).thenThrow(new RuntimeException("test"));
+
+        Optional<Integer> actual = scraper.getPopulation(COUNTRY_NAME);
+
+        assertThat(actual).isEmpty();
+    }
+
+
 }

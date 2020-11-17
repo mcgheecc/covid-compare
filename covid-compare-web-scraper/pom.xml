@@ -21,6 +21,8 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <assertj.version>3.18.0</assertj.version>
+    <jacoco.version>0.8.6</jacoco.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -75,7 +77,44 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <destFile>${basedir}\target\jacoco.exec</destFile>
+              <propertyName>argLine</propertyName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <configuration>
+              <dataFile>${basedir}\target\jacoco.exec</dataFile>
+              <outputDirectory>${basedir}\target</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
+
 </project>
